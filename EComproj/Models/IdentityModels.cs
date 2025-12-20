@@ -7,23 +7,18 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EComproj.Models;
+using System.Data.Entity;
 
 namespace EComproj.Models
 {
-    // You can add User data for the user by adding more properties to your User class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public ClaimsIdentity GenerateUserIdentity(ApplicationUserManager manager)
-        {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = manager.CreateIdentity(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
-            return userIdentity;
-        }
+        // You can add profile fields later (e.g., DisplayName, Address, etc.)
 
-        public Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-            return Task.FromResult(GenerateUserIdentity(manager));
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            return userIdentity;
         }
     }
 
@@ -37,6 +32,88 @@ namespace EComproj.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        // Domain DbSets
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<UserInterest> UserInterests { get; set; }
+        public DbSet<ProductClick> ProductClicks { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Decimal precision for prices
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.TotalAmount)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.UnitPrice)
+                .HasPrecision(18, 2);
+
+            // Relationships
+            modelBuilder.Entity<Product>()
+                .HasRequired(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Product>()
+                .HasRequired(p => p.Seller)
+                .WithMany()
+                .HasForeignKey(p => p.SellerId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ProductImage>()
+                .HasRequired(pi => pi.Product)
+                .WithMany(p => p.Images)
+                .HasForeignKey(pi => pi.ProductId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasRequired(oi => oi.Order)
+                .WithMany(o => o.Items)
+                .HasForeignKey(oi => oi.OrderId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasRequired(oi => oi.Product)
+                .WithMany(p => p.OrderItems)
+                .HasForeignKey(oi => oi.ProductId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserInterest>()
+                .HasRequired(ui => ui.User)
+                .WithMany()
+                .HasForeignKey(ui => ui.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserInterest>()
+                .HasRequired(ui => ui.Category)
+                .WithMany()
+                .HasForeignKey(ui => ui.CategoryId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<ProductClick>()
+                .HasRequired(pc => pc.User)
+                .WithMany()
+                .HasForeignKey(pc => pc.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ProductClick>()
+                .HasRequired(pc => pc.Product)
+                .WithMany(p => p.ProductClicks)
+                .HasForeignKey(pc => pc.ProductId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

@@ -382,8 +382,20 @@
     <Compile Include="Migrations\202512200805542_InitialIdentity.Designer.cs">
       <DependentUpon>202512200805542_InitialIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202512200850426_DomainModels.cs" />
+    <Compile Include="Migrations\202512200850426_DomainModels.Designer.cs">
+      <DependentUpon>202512200850426_DomainModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderItem.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductClick.cs" />
+    <Compile Include="Models\ProductImage.cs" />
+    <Compile Include="Models\UserInterest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -425,6 +437,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202512200805542_InitialIdentity.resx">
       <DependentUpon>202512200805542_InitialIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202512200850426_DomainModels.resx">
+      <DependentUpon>202512200850426_DomainModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

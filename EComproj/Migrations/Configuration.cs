@@ -81,6 +81,22 @@ namespace EComproj.Migrations
             {
                 userManager.AddToRole(adminUser.Id, "Admin");
             }
+
+            // Seed default categories
+            string[] defaultCategories = {
+                "Electronics", "Fashion", "Home & Kitchen", "Books",
+                "Sports & Outdoors", "Beauty & Personal Care", "Toys & Games"
+            };
+
+            foreach (var catName in defaultCategories)
+            {
+                if (!context.Categories.Any(c => c.Name == catName))
+                {
+                    context.Categories.Add(new Category { Name = catName });
+                }
+            }
+
+            context.SaveChanges();
         }
     }
 }
