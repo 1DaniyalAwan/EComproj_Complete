@@ -55,6 +55,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckoutStockTests.cs" />
     <Compile Include="ProductApprovalTests.cs" />
     <Compile Include="RecommendationEngineTests.cs" />
     <Compile Include="OrderTotalTests.cs" />

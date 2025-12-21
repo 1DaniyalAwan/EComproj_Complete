@@ -12,8 +12,14 @@ namespace EComproj.Shop
 {
     public partial class Catalog : Page
     {
+        private const int PageSize = 12;
+        private int _page;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            int.TryParse(Request.QueryString["page"], out _page);
+            if (_page < 1) _page = 1;
+
             if (!IsPostBack)
             {
                 using (var db = new ApplicationDbContext())
@@ -31,6 +37,7 @@ namespace EComproj.Shop
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
+            _page = 1; // reset to first page on search
             BindProducts();
             BindRecommendations();
         }
@@ -53,7 +60,11 @@ namespace EComproj.Shop
                     query = query.Where(p => p.CategoryId == categoryId);
                 }
 
+                var total = query.Count();
                 var data = query
+                    .OrderBy(x => x.Name)
+                    .Skip((_page - 1) * PageSize)
+                    .Take(PageSize)
                     .Select(p => new
                     {
                         p.Id,
@@ -61,11 +72,19 @@ namespace EComproj.Shop
                         p.Price,
                         ImagePath = p.Images.Select(i => i.ImagePath).FirstOrDefault()
                     })
-                    .OrderBy(x => x.Name)
                     .ToList();
 
                 rptProducts.DataSource = data;
                 rptProducts.DataBind();
+
+                lblPageInfo.Text = $"Page {_page}";
+
+                var baseUrl = ResolveUrl("~/Shop/Catalog.aspx") + $"?page={_page}";
+                if (!string.IsNullOrEmpty(search)) baseUrl += $"&q={Uri.EscapeDataString(search)}";
+                if (int.TryParse(ddlCategory.SelectedValue, out categoryId)) baseUrl += $"&cat={categoryId}";
+
+                lnkPrev.NavigateUrl = ResolveUrl($"~/Shop/Catalog.aspx?page={Math.Max(1, _page - 1)}");
+                lnkNext.NavigateUrl = ResolveUrl($"~/Shop/Catalog.aspx?page={_page + 1}");
             }
         }
 

@@ -33,4 +33,11 @@
             </div>
         </ItemTemplate>
     </asp:Repeater>
+
+    <div style="margin-top:10px;">
+        <asp:Label ID="lblPageInfo" runat="server" />
+        <asp:HyperLink ID="lnkPrev" runat="server" Text="Prev" />
+        |
+        <asp:HyperLink ID="lnkNext" runat="server" Text="Next" />
+    </div>
 </asp:Content>

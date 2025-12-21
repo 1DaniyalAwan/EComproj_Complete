@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>My Products</h2>
     <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
-    <asp:GridView ID="gvProducts" runat="server" AutoGenerateColumns="False" Width="100%">
+    <asp:GridView ID="gvProducts" runat="server" AutoGenerateColumns="False" Width="100%" DataKeyNames="Id" OnRowCommand="gvProducts_RowCommand">
         <Columns>
             <asp:BoundField DataField="Id" HeaderText="ID" />
             <asp:BoundField DataField="Name" HeaderText="Name" />
@@ -13,6 +13,13 @@
             <asp:TemplateField HeaderText="Image">
                 <ItemTemplate>
                     <asp:Image ID="img" runat="server" ImageUrl='<%# Eval("ImagePath") %>' Width="80" />
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Actions">
+                <ItemTemplate>
+                    <a href='<%# ResolveUrl("~/Seller/EditProduct.aspx?id=" + Eval("Id")) %>'>Edit</a>
+                    |
+                    <asp:Button runat="server" CommandName="DeleteProduct" CommandArgument="<%# Container.DisplayIndex %>" Text="Delete" />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
