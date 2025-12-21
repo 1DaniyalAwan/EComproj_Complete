@@ -1,44 +1,44 @@
 ﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="EComproj.Account.Register" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <main aria-labelledby="title">
-        <h2 id="title"><%: Title %>.</h2>
-        <p class="text-danger">
-            <asp:Literal runat="server" ID="ErrorMessage" />
-        </p>
-        <h4>Create a new account</h4>
-        <hr />
-        <asp:ValidationSummary runat="server" CssClass="text-danger" />
-        <div class="row">
-            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 col-form-label">Email</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                    CssClass="text-danger" ErrorMessage="The email field is required." />
-            </div>
-        </div>
-        <div class="row">
-            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 col-form-label">Password</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
-                    CssClass="text-danger" ErrorMessage="The password field is required." />
-            </div>
-        </div>
-        <div class="row">
-            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 col-form-label">Confirm password</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
-                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
-                <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
-                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
-            </div>
-        </div>
-        <div class="row">
-            <div class="offset-md-2 col-md-10">
-                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" CssClass="btn btn-outline-dark" />
-            </div>
-        </div>
-    </main>
+    <h2>Register</h2>
+    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+
+    <div>
+        <asp:Label runat="server" AssociatedControlID="Email">Email</asp:Label><br />
+        <asp:TextBox runat="server" ID="Email" Width="350" />
+    </div>
+    <div style="margin-top:10px;">
+        <asp:Label runat="server" AssociatedControlID="Password">Password</asp:Label><br />
+        <asp:TextBox runat="server" ID="Password" TextMode="Password" Width="350" />
+    </div>
+    <div style="margin-top:10px;">
+        <asp:Label runat="server" AssociatedControlID="ConfirmPassword">Confirm password</asp:Label><br />
+        <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" Width="350" />
+    </div>
+
+    <div style="margin-top:15px;">
+        <strong>Select Role</strong><br />
+        <asp:RadioButtonList ID="rblRole" runat="server" RepeatDirection="Horizontal">
+            <asp:ListItem Text="Customer" Value="Customer" Selected="True"></asp:ListItem>
+            <asp:ListItem Text="Seller" Value="Seller"></asp:ListItem>
+        </asp:RadioButtonList>
+    </div>
+
+    <asp:Panel ID="pnlInterests" runat="server" Visible="true" Style="margin-top:15px;">
+        <strong>Select Your Interests</strong><br />
+        <asp:CheckBoxList ID="cblInterests" runat="server" RepeatColumns="3"></asp:CheckBoxList>
+        <div style="font-size:12px;color:#555;">You can update these later.</div>
+    </asp:Panel>
+
+    <div style="margin-top:20px;">
+        <asp:Button ID="CreateUser" runat="server" Text="Register" OnClick="CreateUser_Click" />
+    </div>
+
+    <script runat="server">
+        protected void rblRole_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pnlInterests.Visible = (rblRole.SelectedValue == "Customer");
+        }
+    </script>
 </asp:Content>

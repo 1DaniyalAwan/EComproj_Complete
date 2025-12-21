@@ -7,83 +7,65 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EComproj.Account
+namespace EComproj.Shop
 {
 
 
-    public partial class Register
+    public partial class Catalog
     {
 
         /// <summary>
-        /// lblMessage control.
+        /// txtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessage;
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
 
         /// <summary>
-        /// Email control.
+        /// ddlCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Email;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCategory;
 
         /// <summary>
-        /// Password control.
+        /// btnSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Password;
+        protected global::System.Web.UI.WebControls.Button btnSearch;
 
         /// <summary>
-        /// ConfirmPassword control.
+        /// pnlRecommendations control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ConfirmPassword;
+        protected global::System.Web.UI.WebControls.Panel pnlRecommendations;
 
         /// <summary>
-        /// rblRole control.
+        /// rptRecommendations control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblRole;
+        protected global::System.Web.UI.WebControls.Repeater rptRecommendations;
 
         /// <summary>
-        /// pnlInterests control.
+        /// rptProducts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlInterests;
-
-        /// <summary>
-        /// cblInterests control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cblInterests;
-
-        /// <summary>
-        /// CreateUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateUser;
+        protected global::System.Web.UI.WebControls.Repeater rptProducts;
     }
 }

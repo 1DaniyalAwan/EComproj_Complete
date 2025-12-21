@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EComproj.Account
+namespace EComproj.Shop
 {
 
 
-    public partial class Register
+    public partial class ProductDetails
     {
 
         /// <summary>
@@ -24,66 +24,75 @@ namespace EComproj.Account
         protected global::System.Web.UI.WebControls.Label lblMessage;
 
         /// <summary>
-        /// Email control.
+        /// pnlDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Email;
+        protected global::System.Web.UI.WebControls.Panel pnlDetails;
 
         /// <summary>
-        /// Password control.
+        /// imgMain control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Password;
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgMain;
 
         /// <summary>
-        /// ConfirmPassword control.
+        /// lblName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ConfirmPassword;
+        protected global::System.Web.UI.WebControls.Label lblName;
 
         /// <summary>
-        /// rblRole control.
+        /// lblPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblRole;
+        protected global::System.Web.UI.WebControls.Label lblPrice;
 
         /// <summary>
-        /// pnlInterests control.
+        /// lblStock control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlInterests;
+        protected global::System.Web.UI.WebControls.Label lblStock;
 
         /// <summary>
-        /// cblInterests control.
+        /// lblDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cblInterests;
+        protected global::System.Web.UI.WebControls.Label lblDescription;
 
         /// <summary>
-        /// CreateUser control.
+        /// txtQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateUser;
+        protected global::System.Web.UI.WebControls.TextBox txtQty;
+
+        /// <summary>
+        /// btnAddToCart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddToCart;
     }
 }
