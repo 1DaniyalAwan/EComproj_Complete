@@ -24,6 +24,7 @@ namespace EComproj.Shop
             {
                 using (var db = new ApplicationDbContext())
                 {
+                    ddlCategory.Items.Clear();
                     ddlCategory.Items.Add(new System.Web.UI.WebControls.ListItem("-- All --", "0"));
                     foreach (var c in db.Categories.OrderBy(x => x.Name).ToList())
                     {
@@ -61,6 +62,10 @@ namespace EComproj.Shop
                 }
 
                 var total = query.Count();
+                var totalPages = (int)Math.Ceiling(total / (double)PageSize);
+                if (totalPages == 0) totalPages = 1;
+                if (_page > totalPages) _page = totalPages;
+
                 var data = query
                     .OrderBy(x => x.Name)
                     .Skip((_page - 1) * PageSize)
@@ -77,14 +82,21 @@ namespace EComproj.Shop
                 rptProducts.DataSource = data;
                 rptProducts.DataBind();
 
-                lblPageInfo.Text = $"Page {_page}";
+                lblPageInfo.Text = $"Page {_page} of {totalPages} (Total items: {total})";
 
-                var baseUrl = ResolveUrl("~/Shop/Catalog.aspx") + $"?page={_page}";
-                if (!string.IsNullOrEmpty(search)) baseUrl += $"&q={Uri.EscapeDataString(search)}";
-                if (int.TryParse(ddlCategory.SelectedValue, out categoryId)) baseUrl += $"&cat={categoryId}";
+                // Prev/Next links
+                lnkPrev.Visible = _page > 1;
+                lnkNext.Visible = _page < totalPages;
 
-                lnkPrev.NavigateUrl = ResolveUrl($"~/Shop/Catalog.aspx?page={Math.Max(1, _page - 1)}");
-                lnkNext.NavigateUrl = ResolveUrl($"~/Shop/Catalog.aspx?page={_page + 1}");
+                if (lnkPrev.Visible)
+                    lnkPrev.NavigateUrl = ResolveUrl($"~/Shop/Catalog.aspx?page={_page - 1}");
+                else
+                    lnkPrev.NavigateUrl = string.Empty;
+
+                if (lnkNext.Visible)
+                    lnkNext.NavigateUrl = ResolveUrl($"~/Shop/Catalog.aspx?page={_page + 1}");
+                else
+                    lnkNext.NavigateUrl = string.Empty;
             }
         }
 
