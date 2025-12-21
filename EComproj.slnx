@@ -1,3 +1,4 @@
 <Solution>
-  <Project Path="EComproj/EComproj.csproj" />
+  <Project Path="EComproj.Tests/EComproj.Tests.csproj" Id="f1020922-1cbd-49f9-89c8-32ea5a2c9a04" />
+  <Project Path="EComproj/EComproj.csproj" Id="24a2f50d-253a-4020-b1f4-20127caaebcc" />
 </Solution>
