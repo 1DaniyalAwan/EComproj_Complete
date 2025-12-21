@@ -1,26 +1,41 @@
 ﻿<%@ Page Title="Add Product" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddProduct.aspx.cs" Inherits="EComproj.Seller.AddProduct" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Add Product</h2>
-    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
-    <asp:Panel runat="server">
-        <asp:Label AssociatedControlID="txtName" runat="server" Text="Name"></asp:Label><br />
-        <asp:TextBox ID="txtName" runat="server" Width="400"></asp:TextBox><br /><br />
+    <asp:Label ID="lblMessage" runat="server" CssClass="text-danger"></asp:Label>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="mb-3">
+                <asp:Label AssociatedControlID="txtName" runat="server" CssClass="form-label">Name</asp:Label>
+                <asp:TextBox ID="txtName" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
 
-        <asp:Label AssociatedControlID="txtDescription" runat="server" Text="Description"></asp:Label><br />
-        <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" Rows="5" Width="600"></asp:TextBox><br /><br />
+            <div class="mb-3">
+                <asp:Label AssociatedControlID="txtDescription" runat="server" CssClass="form-label">Description</asp:Label>
+                <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" Rows="5" CssClass="form-control"></asp:TextBox>
+            </div>
 
-        <asp:Label AssociatedControlID="txtPrice" runat="server" Text="Price"></asp:Label><br />
-        <asp:TextBox ID="txtPrice" runat="server" Width="200"></asp:TextBox><br /><br />
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <asp:Label AssociatedControlID="txtPrice" runat="server" CssClass="form-label">Price</asp:Label>
+                    <asp:TextBox ID="txtPrice" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <asp:Label AssociatedControlID="txtStock" runat="server" CssClass="form-label">Stock</asp:Label>
+                    <asp:TextBox ID="txtStock" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
 
-        <asp:Label AssociatedControlID="txtStock" runat="server" Text="Stock"></asp:Label><br />
-        <asp:TextBox ID="txtStock" runat="server" Width="200"></asp:TextBox><br /><br />
+            <div class="mb-3">
+                <asp:Label AssociatedControlID="ddlCategory" runat="server" CssClass="form-label">Category</asp:Label>
+                <asp:DropDownList ID="ddlCategory" runat="server" CssClass="form-select"></asp:DropDownList>
+            </div>
 
-        <asp:Label AssociatedControlID="ddlCategory" runat="server" Text="Category"></asp:Label><br />
-        <asp:DropDownList ID="ddlCategory" runat="server" Width="300"></asp:DropDownList><br /><br />
+            <div class="mb-3">
+                <asp:Label runat="server" CssClass="form-label">Image</asp:Label>
+                <asp:FileUpload ID="fuImage" runat="server" CssClass="form-control" />
+            </div>
 
-        <asp:Label runat="server" Text="Image"></asp:Label><br />
-        <asp:FileUpload ID="fuImage" runat="server" /><br /><br />
-
-        <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
-    </asp:Panel>
+            <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary" OnClick="btnSubmit_Click" />
+        </div>
+    </div>
 </asp:Content>
