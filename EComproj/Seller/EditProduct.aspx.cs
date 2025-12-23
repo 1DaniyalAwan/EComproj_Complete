@@ -54,7 +54,9 @@ namespace EComproj.Seller
                     txtStock.Text = product.Stock.ToString();
                     ddlCategory.SelectedValue = product.CategoryId.ToString();
                     lblStatus.Text = product.ApprovalStatus.ToString();
-                    imgCurrent.ImageUrl = product.Images.Select(i => i.ImagePath).FirstOrDefault() ?? "";
+
+                    var currentPath = product.Images.Select(i => i.ImagePath).FirstOrDefault() ?? "";
+                    imgCurrent.ImageUrl = ResolveUrl(currentPath);
                 }
             }
         }
@@ -96,7 +98,6 @@ namespace EComproj.Seller
                     return;
                 }
 
-                // Detect changes
                 bool baseChanged =
                     (product.Name ?? "") != txtName.Text.Trim() ||
                     (product.Description ?? "") != txtDescription.Text.Trim() ||
@@ -110,20 +111,17 @@ namespace EComproj.Seller
                 product.CategoryId = categoryId;
                 product.UpdatedAt = DateTime.UtcNow;
 
-                // If core fields changed, require re-approval
                 if (baseChanged)
                 {
                     product.ApprovalStatus = ApprovalStatus.Pending;
                     lblStatus.Text = "Pending";
                 }
 
-                // Replace image if uploaded
                 if (fuImage.HasFile)
                 {
                     var ext = Path.GetExtension(fuImage.FileName)?.ToLowerInvariant();
                     if (ext == ".jpg" || ext == ".jpeg" || ext == ".png")
                     {
-                        // Delete previous images (and files)
                         foreach (var img in product.Images.ToList())
                         {
                             var path = Server.MapPath(img.ImagePath);
@@ -142,7 +140,7 @@ namespace EComproj.Seller
                             ImagePath = relPath
                         });
 
-                        imgCurrent.ImageUrl = relPath;
+                        imgCurrent.ImageUrl = ResolveUrl(relPath);
                     }
                     else
                     {

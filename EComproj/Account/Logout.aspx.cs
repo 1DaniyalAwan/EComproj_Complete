@@ -15,7 +15,7 @@ namespace EComproj.Account
         {
             var auth = Context.GetOwinContext().Authentication;
             auth.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            Response.Redirect("~/");
+            Response.Redirect("~/Account/Login.aspx");
         }
     }
 }

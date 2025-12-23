@@ -38,7 +38,7 @@ namespace EComproj.Shop
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            _page = 1; // reset to first page on search
+            _page = 1; // reset to first page on new search/filter
             BindProducts();
             BindRecommendations();
         }
@@ -49,16 +49,52 @@ namespace EComproj.Shop
             {
                 var query = db.Products.Where(p => p.ApprovalStatus == ApprovalStatus.Approved && !p.IsDeleted);
 
+                // Search text
                 var search = txtSearch.Text.Trim();
                 if (!string.IsNullOrEmpty(search))
                 {
                     query = query.Where(p => p.Name.Contains(search) || p.Description.Contains(search));
                 }
 
+                // Category filter
                 int categoryId;
                 if (int.TryParse(ddlCategory.SelectedValue, out categoryId) && categoryId > 0)
                 {
                     query = query.Where(p => p.CategoryId == categoryId);
+                }
+
+                // Price filters
+                decimal minPrice;
+                if (decimal.TryParse(txtMinPrice.Text, out minPrice) && minPrice >= 0)
+                {
+                    query = query.Where(p => p.Price >= minPrice);
+                }
+                decimal maxPrice;
+                if (decimal.TryParse(txtMaxPrice.Text, out maxPrice) && maxPrice >= 0)
+                {
+                    query = query.Where(p => p.Price <= maxPrice);
+                }
+
+                // Sorting
+                switch (ddlSort.SelectedValue)
+                {
+                    case "price_asc":
+                        query = query.OrderBy(p => p.Price).ThenBy(p => p.Name);
+                        break;
+                    case "price_desc":
+                        query = query.OrderByDescending(p => p.Price).ThenBy(p => p.Name);
+                        break;
+                    case "newest":
+                        query = query.OrderByDescending(p => p.CreatedAt).ThenBy(p => p.Name);
+                        break;
+                    case "name":
+                        query = query.OrderBy(p => p.Name);
+                        break;
+                    case "popular":
+                    default:
+                        // Sort by click popularity, then Name
+                        query = query.OrderByDescending(p => p.ProductClicks.Count).ThenBy(p => p.Name);
+                        break;
                 }
 
                 var total = query.Count();
@@ -67,7 +103,6 @@ namespace EComproj.Shop
                 if (_page > totalPages) _page = totalPages;
 
                 var data = query
-                    .OrderBy(x => x.Name)
                     .Skip((_page - 1) * PageSize)
                     .Take(PageSize)
                     .Select(p => new
@@ -112,7 +147,7 @@ namespace EComproj.Shop
             {
                 var uid = Context.User.Identity.GetUserId();
                 var service = new RecommendationService();
-                var recs = service.GetRecommendedProducts(db, uid, count: 6)
+                var recs = service.GetRecommendedProducts(db, uid, count: 5)
                     .Select(p => new
                     {
                         p.Id,

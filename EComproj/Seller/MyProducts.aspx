@@ -13,7 +13,7 @@
             <asp:BoundField DataField="ApprovalStatus" HeaderText="Status" />
             <asp:TemplateField HeaderText="Image">
                 <ItemTemplate>
-                    <img src='<%# Eval("ImagePath") %>' style="width:80px;height:60px;object-fit:cover;" />
+                    <asp:Image runat="server" ImageUrl='<%# ResolveUrl(Eval("ImagePath") as string) %>' Width="80" />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Actions">

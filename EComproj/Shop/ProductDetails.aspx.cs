@@ -48,10 +48,9 @@ namespace EComproj.Shop
                     lblDescription.Text = p.Description;
                     lblPrice.Text = string.Format("{0:C}", p.Price);
                     lblStock.Text = p.Stock.ToString();
-                    imgMain.Src = p.ImagePath ?? "";
+                    imgMain.Src = ResolveUrl(p.ImagePath ?? "");
                 }
 
-                // Track click if logged in
                 if (Context.User.Identity.IsAuthenticated)
                 {
                     using (var db = new ApplicationDbContext())
@@ -86,15 +85,15 @@ namespace EComproj.Shop
                     return;
                 }
 
-                var cart = CartHelper.GetCart(Session);
-                CartHelper.AddOrUpdate(cart, new CartItem
+                var cart = Services.CartHelper.GetCart(Session);
+                Services.CartHelper.AddOrUpdate(cart, new CartItem
                 {
                     ProductId = p.Id,
                     Name = p.Name,
                     UnitPrice = p.Price,
                     Quantity = qty
                 });
-                CartHelper.SaveCart(Session, cart);
+                Services.CartHelper.SaveCart(Session, cart);
 
                 lblMessage.ForeColor = System.Drawing.Color.Green;
                 lblMessage.Text = "Added to cart.";

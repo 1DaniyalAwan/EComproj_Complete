@@ -11,15 +11,27 @@
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
     <style>
         body { padding-top: 70px; }
-        .product-card { border:1px solid #ddd; padding:10px; margin:5px; width:220px; display:inline-block; }
-        .product-card img { width:200px; height:140px; object-fit:cover; }
+
+        /* Consistent product cards */
+        .card .card-img-top {
+            height: 160px;
+            object-fit: cover;
+        }
+        .card .card-title {
+            min-height: 2.4em; /* ~2 lines */
+            line-height: 1.2;
+            margin-bottom: .25rem;
+            overflow: hidden;
+        }
+        .card .card-text {
+            margin-bottom: .5rem;
+        }
     </style>
 </head>
 <body>
     <form runat="server">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="<%= ResolveUrl("~/") %>">EComproj</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
